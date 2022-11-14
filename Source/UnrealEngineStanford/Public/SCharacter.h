@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 UCLASS()
 class UNREALENGINESTANFORD_API ASCharacter : public ACharacter
 {
@@ -16,6 +19,14 @@ public:
 	ASCharacter();
 
 protected:
+	
+	// Avoids the camera attached to the character to stay behind a wall or any object
+	UPROPERTY(visibleAnywhere)
+	USpringArmComponent* SpringArmComp;
+	
+	UPROPERTY(visibleAnywhere)
+	UCameraComponent* CameraComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
