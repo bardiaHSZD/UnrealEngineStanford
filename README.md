@@ -1,4 +1,4 @@
-# Stanford-UnrealEngine-CS193U
+# Stanford-CSU193U-UnrealEngine
 
 ## CS 193U: Video Game Development in C++ and Unreal Engine
 
