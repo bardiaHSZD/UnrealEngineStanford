@@ -76,3 +76,7 @@ DerivedDataCache/*
 # Starter Content
 Content/StarterContent/*
 
+# Example Content
+Content/ExampleContent/*
+Content/ParagonGideon/*
+Content/ParagonMinions/*
