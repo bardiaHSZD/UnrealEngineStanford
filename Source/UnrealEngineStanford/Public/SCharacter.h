@@ -19,6 +19,9 @@ public:
 	ASCharacter();
 
 protected:
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
 	
 	// Avoids the camera attached to the character to stay behind a wall or any object
 	UPROPERTY(visibleAnywhere)
@@ -33,6 +36,8 @@ protected:
 	void MoveForward(float value);
 	
 	void MoveRight(float value);
+
+	void PrimaryAttack();
 
 public:	
 	// Called every frame
