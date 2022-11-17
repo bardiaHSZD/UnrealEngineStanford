@@ -13,6 +13,13 @@ ASMagicProjectile::ASMagicProjectile()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComp");
+	//Instead of the following manual settings:
+	//SphereComp->SetCollisionObjectType(ECC_WorldDynamic);
+	//SphereComp->SetCollisionResponseToAllChannels(ECR_Ignore);
+	//SphereComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	//We can use the following profle set in collisions in the project settings in UE5 editor
+	SphereComp->SetCollisionProfileName("Projectile");
+	 
 	RootComponent = SphereComp;
 
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
