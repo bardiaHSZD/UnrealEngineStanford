@@ -1,0 +1,6 @@
+﻿Clean started...
+1>------ Skipped Clean: Project: UE5, Configuration: BuiltWithUnrealBuildTool Win64 ------
+1>Project not selected to build for this solution configuration 
+2>------ Clean started: Project: UnrealEngineStanford, Configuration: Development_Editor x64 ------
+2>Cleaning UnrealEngineStanfordEditor and UnrealHeaderTool binaries...
+========== Clean: 1 succeeded, 0 failed, 1 skipped ==========

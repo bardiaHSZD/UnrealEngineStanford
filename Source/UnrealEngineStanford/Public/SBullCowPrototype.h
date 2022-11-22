@@ -2,10 +2,10 @@
 
 #pragma once
 
+#include <vector>
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "SBullCowPrototype.generated.h"
-
 
 
 // to make syntax Unreal friendly
@@ -32,13 +32,17 @@ UCLASS()
 class UNREALENGINESTANFORD_API ASBullCowPrototype : public AActor
 {
 	GENERATED_BODY()
-	// see constructor for initialisation
+	// see constructor for initialization
 	int32 MyCurrentTry;
 	FString MyHiddenWord;
 	bool bGameIsWon;
 
 	bool IsIsogram(FString) const;
 	bool IsLowercase(FString) const;
+
+	std::vector<FString> GuessList{ "sobbe", "sobby", "sober" };
+
+
 public:	
 	// Sets default values for this actor's properties
 	ASBullCowPrototype();
@@ -48,9 +52,16 @@ public:
 	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const;
-
 	void ResetGame();
 	FBullCowCount SubmitValidGuess(FString);
+
+	void PrintIntro();
+	void PlayGame();
+	FString GetValidGuess();
+	bool AskToPlayAgain();
+	void PrintGameSummary();
+
+
 
 
 protected:

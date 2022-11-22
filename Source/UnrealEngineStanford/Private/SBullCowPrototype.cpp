@@ -30,12 +30,23 @@ void ASBullCowPrototype::Tick(float DeltaTime)
 
 }
 
+// The console main function is defined in sync()
 void ASBullCowPrototype::sync() {
-    FString base = "This is world cup";
+    FString base = "This is year ";
 	constexpr int32 yearBook = 2022;
 	base.Append(" ----------- ");
 	base.Append(FString::FromInt(yearBook));
 	UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+
+	bool bPlayAgain = false;
+
+	
+	do {
+		PrintIntro();
+		PlayGame();
+		bPlayAgain = AskToPlayAgain();
+	} while (bPlayAgain);
+	
 }
 
 int32 ASBullCowPrototype::GetCurrentTry() const { return MyCurrentTry; }
@@ -50,7 +61,7 @@ int32 ASBullCowPrototype::GetMaxTries() const
 
 void ASBullCowPrototype::ResetGame()
 {
-	const FString HIDDEN_WORD = "plane"; // this MUST be an isogram
+	const FString HIDDEN_WORD = "sober"; // this MUST be an ISOGRAM
 	MyHiddenWord = HIDDEN_WORD;
 
 	MyCurrentTry = 1;
@@ -61,7 +72,7 @@ void ASBullCowPrototype::ResetGame()
 
 EGuessStatus ASBullCowPrototype::CheckGuessValidity(FString Guess) const
 {
-	if (!IsIsogram(Guess)) // if the guess isn't an isogram
+	if (!IsIsogram(Guess)) // if the guess isn't an ISOGRAM
 	{
 		return EGuessStatus::Not_Isogram;
 	}
@@ -80,7 +91,7 @@ EGuessStatus ASBullCowPrototype::CheckGuessValidity(FString Guess) const
 }
 
 
-// receives a VALID guess, incriments turn, and returns count
+// receives a VALID guess, increments turn, and returns count
 FBullCowCount ASBullCowPrototype::SubmitValidGuess(FString Guess)
 {
 	MyCurrentTry++;
@@ -94,7 +105,7 @@ FBullCowCount ASBullCowPrototype::SubmitValidGuess(FString Guess)
 			// if they match then
 			if (Guess[GChar] == MyHiddenWord[MHWChar]) {
 				if (MHWChar == GChar) { // if they're in the same place
-					BullCowCount.Bulls++; // incriment bulls
+					BullCowCount.Bulls++; // increment bulls
 				}
 				else {
 					BullCowCount.Cows++; // must be a cow
@@ -114,18 +125,21 @@ FBullCowCount ASBullCowPrototype::SubmitValidGuess(FString Guess)
 
 bool ASBullCowPrototype::IsIsogram(FString Word) const
 {
-	// treat 0 and 1 letter words as isograms
+	// treat 0 and 1 letter words as ISOGRAMS
 	if (Word.Len() <= 1) { return true; }
 
-	TMap<char, bool> LetterSeen; // setup our map
-	for (auto Letter : Word) 	// for all letters of the word
-	{
-		Letter = tolower(Letter); // handle mixed case
-		if (LetterSeen[Letter]) {// if the letter is in the map
-			return false; // we do NOT have an isogram
-		}
-		else {
-			LetterSeen[Letter] = true;// add the letter to the map
+	
+	int length = Word.Len();
+	int mapHash[26] = { 0 };
+
+	// loop to store count of chars and check if it is
+	// greater than 1
+	for (int i = 0; i < length; i++) {
+		mapHash[Word[i] - 'a']++;
+
+		// if count > 1, return false
+		if (mapHash[Word[i] - 'a'] > 1) {
+			return false;
 		}
 	}
 
@@ -142,4 +156,114 @@ bool ASBullCowPrototype::IsLowercase(FString Word) const
 		}
 	}
 	return true;
+}
+
+
+
+
+
+
+
+
+
+void ASBullCowPrototype::PrintIntro()
+{
+	FString base = "Welcome to Bulls and Cows, a fun word game. Can you guess the ISOGRAM I'm thinking of?";
+	UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+	return;
+}
+
+// plays a single game to completion
+void ASBullCowPrototype::PlayGame()
+{
+	ResetGame();
+	int32 MaxTries = GetMaxTries();
+
+	// loop asking for guesses while the game
+	// is NOT won and there are still tries remaining
+	while (!IsGameWon() && GetCurrentTry() <= MaxTries) {
+		FString Guess = GetValidGuess();
+
+		// submit valid guess to the game, and receive counts
+		FBullCowCount BullCowCount = SubmitValidGuess(Guess);
+
+		FString base = "Bulls = ";
+		base.Append(FString::FromInt(BullCowCount.Bulls));
+		UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+
+		base = "Cows = ";
+		base.Append(FString::FromInt(BullCowCount.Cows));
+		UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+	}
+
+	PrintGameSummary();
+	return;
+}
+
+// loop continually until the user gives a valid guess
+FString ASBullCowPrototype::GetValidGuess()
+{
+	FString Guess;
+	FString base;
+	int counter = 0;
+	EGuessStatus Status = EGuessStatus::Invalid_Status;
+
+	do {
+		// get a guess from the player
+		int32 CurrentTry = GetCurrentTry();
+		base = "Try ";
+		base.Append(FString::FromInt(CurrentTry));
+		base.Append(" of ");
+		base.Append(FString::FromInt(GetMaxTries()));
+		base.Append(". Enter your guess: ");
+		UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+
+		Guess = GuessList[counter++]; //std::getline(std::cin, Guess);
+		UE_LOG(LogTemp, Log, TEXT("%s"), *Guess);
+		// check status and give feedback
+		Status = CheckGuessValidity(Guess);
+		switch (Status) {
+		case EGuessStatus::Wrong_Length:
+			base = "Please enter a ";
+			base.Append(FString::FromInt(GetHiddenWordLength()));
+			base.Append(" letter word.");
+			UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+			break;
+		case EGuessStatus::Not_Isogram:
+			base = "Please enter a word without repeating letters.";
+			UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+			break;
+		case EGuessStatus::Not_Lowercase:
+			base = "Please enter all lowercase letters.";
+			UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+			break;
+		default:
+			// assume the guess is valid
+			break;
+		}
+	} while (Status != EGuessStatus::OK); // keep looping until we get no errors
+	return Guess;
+}
+
+bool ASBullCowPrototype::AskToPlayAgain()
+{
+	FString base = "Do you want to play again with the same hidden word (y/n)? ";
+	UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+	FString Response = "n"; //std::getline(std::cin, Response);
+	UE_LOG(LogTemp, Log, TEXT("%s"), *Response);
+	return (Response[0] == 'y') || (Response[0] == 'Y');
+}
+
+void ASBullCowPrototype::PrintGameSummary()
+{
+	if (IsGameWon())
+	{
+		FString base = "WELL DONE - YOU WIN!";
+		UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+	}
+	else
+	{
+		FString base = "Better luck next time!";
+		UE_LOG(LogTemp, Log, TEXT("%s"), *base);
+	}
 }
