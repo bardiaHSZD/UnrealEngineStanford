@@ -205,7 +205,6 @@ FString ASBullCowPrototype::GetValidGuess()
 {
 	FString Guess;
 	FString base;
-	int counter = 0;
 	EGuessStatus Status = EGuessStatus::Invalid_Status;
 
 	do {
@@ -249,7 +248,7 @@ bool ASBullCowPrototype::AskToPlayAgain()
 {
 	FString base = "Do you want to play again with the same hidden word (y/n)? ";
 	UE_LOG(LogTemp, Log, TEXT("%s"), *base);
-	FString Response = "n"; //std::getline(std::cin, Response);
+	FString Response = PlayAgainList[tryCounter++]; //std::getline(std::cin, Response);
 	UE_LOG(LogTemp, Log, TEXT("%s"), *Response);
 	return (Response[0] == 'y') || (Response[0] == 'Y');
 }

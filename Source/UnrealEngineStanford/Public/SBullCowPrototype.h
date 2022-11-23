@@ -40,7 +40,11 @@ class UNREALENGINESTANFORD_API ASBullCowPrototype : public AActor
 	bool IsIsogram(FString) const;
 	bool IsLowercase(FString) const;
 
-	std::vector<FString> GuessList{ "sobbe", "sobby", "sober" };
+	std::vector<FString> GuessList{ "sobbe", "soberia", "rebos", "bores", "sbore",
+		"sobre", "erbos", "bosre", "bores", "serob", "seorb", "srbeo", "beors", "srebo", "sober" };
+	std::vector<FString> PlayAgainList{ "y", "n"};
+	int counter = 0;
+	int tryCounter = 0;
 
 
 public:	
