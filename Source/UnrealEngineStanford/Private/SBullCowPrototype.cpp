@@ -43,7 +43,7 @@ void ASBullCowPrototype::sync() {
 	
 	do {
 		PrintIntro();
-		PlayGame();
+		PlayTheGame();
 		bPlayAgain = AskToPlayAgain();
 	} while (bPlayAgain);
 	
@@ -174,7 +174,7 @@ void ASBullCowPrototype::PrintIntro()
 }
 
 // plays a single game to completion
-void ASBullCowPrototype::PlayGame()
+void ASBullCowPrototype::PlayTheGame()
 {
 	ResetGame();
 	int32 MaxTries = GetMaxTries();

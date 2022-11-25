@@ -60,7 +60,7 @@ public:
 	FBullCowCount SubmitValidGuess(FString);
 
 	void PrintIntro();
-	void PlayGame();
+	void PlayTheGame();
 	FString GetValidGuess();
 	bool AskToPlayAgain();
 	void PrintGameSummary();
