@@ -7,16 +7,14 @@
 1>Using Visual Studio 2019 14.29.30146 toolchain (C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133) and Windows 10.0.19041.0 SDK (C:\Program Files (x86)\Windows Kits\10).
 1>Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
 1>  Executing up to 8 processes, one per physical core
-1>  Requested 1.5 GB free memory per action, 5.08 GB available: limiting max parallel actions to 3
-1>Building 6 actions with 3 processes...
-1>[1/6] Compile UnrealEngineStanford.init.gen.cpp
-1>[2/6] Compile OpenDoor.gen.cpp
-1>[3/6] Compile OpenDoor.cpp
-1>[4/6] Link UnrealEditor-UnrealEngineStanford.lib
+1>  Requested 1.5 GB free memory per action, 6.16 GB available: limiting max parallel actions to 4
+1>Building 4 actions with 4 processes...
+1>[1/4] Compile OpenDoor.cpp
+1>[2/4] Link UnrealEditor-UnrealEngineStanford.lib
 1>   Creating library C:\GitHub\UnrealEngineStanford\Intermediate\Build\Win64\UnrealEditor\Development\UnrealEngineStanford\UnrealEditor-UnrealEngineStanford.lib and object C:\GitHub\UnrealEngineStanford\Intermediate\Build\Win64\UnrealEditor\Development\UnrealEngineStanford\UnrealEditor-UnrealEngineStanford.exp
-1>[5/6] Link UnrealEditor-UnrealEngineStanford.dll
+1>[3/4] Link UnrealEditor-UnrealEngineStanford.dll
 1>   Creating library C:\GitHub\UnrealEngineStanford\Intermediate\Build\Win64\UnrealEditor\Development\UnrealEngineStanford\UnrealEditor-UnrealEngineStanford.suppressed.lib and object C:\GitHub\UnrealEngineStanford\Intermediate\Build\Win64\UnrealEditor\Development\UnrealEngineStanford\UnrealEditor-UnrealEngineStanford.suppressed.exp
-1>[6/6] WriteMetadata UnrealEngineStanfordEditor.target
-1>Total time in Parallel executor: 2.15 seconds
-1>Total execution time: 3.06 seconds
+1>[4/4] WriteMetadata UnrealEngineStanfordEditor.target
+1>Total time in Parallel executor: 9.67 seconds
+1>Total execution time: 10.26 seconds
 ========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
